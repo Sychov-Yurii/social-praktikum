@@ -9,7 +9,42 @@ export const commentApi = createApi({
     baseUrl: BASE_URL,
   }),
   tagTypes: ["Comments"],
-  endpoints: (builder) => ({}),
+  endpoints: (builder) => ({
+    getComments: builder.query({
+      query: () => API_ENDPOINT,
+      providesTags: ["Comments"],
+    }),
+    addComment: builder.mutation({
+      query: (data) => ({
+        url: API_ENDPOINT,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Comments"],
+    }),
+  }),
 });
 
-export const {} = commentApi;
+export const { useGetCommentsQuery, useAddCommentMutation } = commentApi;
+
+// import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+
+// const api = createApi({
+//   baseQuery: fetchBaseQuery({ baseUrl: '/' }),
+//   tagTypes: ['Posts'],
+//   endpoints: (build) => ({
+//     getPosts: build.query({
+//       query: () => 'posts',
+//       providesTags: (result) =>
+//         result ? result.map(({ id }) => ({ type: 'Posts', id })) : [],
+//     }),
+//     addPost: build.mutation({
+//       query: (body) => ({
+//         url: `posts`,
+//         method: 'POST',
+//         body,
+//       }),
+//       invalidatesTags: ['Posts'],
+//     }),
+//   }),
+// })
